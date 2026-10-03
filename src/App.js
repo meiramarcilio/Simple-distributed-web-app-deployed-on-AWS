@@ -2,7 +2,7 @@ import './App.css';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-const API_URL = 'https://gn2hi9s7lk.execute-api.sa-east-1.amazonaws.com';//process.env.REACT_APP_API_URL; // URL do API Gateway
+const API_URL = process.env.REACT_APP_API_URL; // URL do API Gateway
 
 function App() {
     const [view, setView] = useState('lista'); // Controle de navegação simples
@@ -20,10 +20,35 @@ function App() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        await axios.post(`${API_URL}/alunos`, form);
-        setForm({ Nome: '', Email: '' });
-        fetchAlunos();
-        setView('lista');
+
+        console.log("Submitting:", form);
+        console.log("POST URL:", `${API_URL}/alunos`);
+
+        try {
+            const response = await axios.post(
+                `${API_URL}/alunos`,
+                form,
+                {
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                }
+            );
+
+            console.log("POST response:", response);
+
+            setForm({ Nome: '', Email: '' });
+
+            await fetchAlunos();
+
+            setView('lista');
+
+        } catch (error) {
+            console.error("POST /alunos ERROR");
+            console.error("Message:", error.message);
+            console.error("Response:", error.response);
+            console.error("Request:", error.request);
+        }
     };
 
     return (
