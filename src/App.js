@@ -21,8 +21,8 @@ function App() {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        console.log("Submitting:", form);
-        console.log("POST URL:", `${API_URL}/alunos`);
+        // console.log("Submitting:", form);
+        // console.log("POST URL:", `${API_URL}/alunos`);
 
         try {
             const response = await axios.post(
@@ -35,7 +35,7 @@ function App() {
                 }
             );
 
-            console.log("POST response:", response);
+            // console.log("POST response:", response);
 
             setForm({ Nome: '', Email: '' });
 
@@ -44,10 +44,11 @@ function App() {
             setView('lista');
 
         } catch (error) {
-            console.error("POST /alunos ERROR");
-            console.error("Message:", error.message);
-            console.error("Response:", error.response);
-            console.error("Request:", error.request);
+            console.error("Error submitting form:");
+            // console.error("POST /alunos ERROR");
+            // console.error("Message:", error.message);
+            // console.error("Response:", error.response);
+            // console.error("Request:", error.request);
         }
     };
 
